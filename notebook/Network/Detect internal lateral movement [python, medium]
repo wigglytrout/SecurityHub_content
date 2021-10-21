@@ -1,0 +1,648 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n# Detect internal lateral movement [python, medium]\n\n### Data\nSample data is bytes amount between two ips/ports:\n  - timestamp,src,dst,port,bytes\n  - Internal hosts have IPs beginning with 12-14\n\n### Goal\n*Detect a machine that would be compromised and used to probe the entire enterprise.\n\nData based on 2019 Trendmicro CTF Wildcard 400",
+      "user": "wigglytrout",
+      "dateUpdated": "2021-10-19 19:01:06.753",
+      "progress": 0,
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1632404957466_1016545216",
+      "id": "paragraph_1632316523498_2024119380",
+      "dateCreated": "2021-09-23 13:49:17.466",
+      "dateStarted": "2021-10-19 19:20:00.004",
+      "dateFinished": "2021-10-19 19:20:02.884",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%python\nprint(\"this is the demo\")\n",
+      "user": "flo",
+      "dateUpdated": "2021-10-19 19:01:21.546",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1634670073555_862638329",
+      "id": "paragraph_1634670073555_862638329",
+      "dateCreated": "2021-10-19 19:01:13.555",
+      "dateStarted": "2021-10-19 19:20:02.908",
+      "dateFinished": "2021-10-19 19:20:06.596",
+      "status": "FINISHED"
+    },
+    {
+      "title": "Load relevant packages",
+      "text": "%python\nimport pandas as pd \nimport numpy as np\nimport matplotlib.pyplot as plt\nimport random",
+      "user": "flo",
+      "dateUpdated": "2021-10-01 16:54:37.183",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionSupport": true
+        },
+        "colWidth": 3.0,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9.0,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1632404957466_535172950",
+      "id": "paragraph_1632316712162_868598964",
+      "dateCreated": "2021-09-23 13:49:17.466",
+      "dateStarted": "2021-10-19 19:20:06.613",
+      "dateFinished": "2021-10-19 19:20:06.858",
+      "status": "FINISHED"
+    },
+    {
+      "title": "Load data",
+      "text": "%python\ndf \u003d pd.read_csv(\n    \u0027gs://snach-opensourcedata/gowiththeflow_20190826.csv.zip\u0027,\n    names\u003d[\u0027ts\u0027, \u0027src\u0027, \u0027dst\u0027, \u0027port\u0027, \u0027bytes\u0027],\n    # as table is large, below is a good way to get sample from data\n    skiprows\u003dlambda i: i\u003e0 and random.random() \u003e 0.1\n)\n\nz.show(df)",
+      "user": "flo",
+      "dateUpdated": "2021-10-19 19:02:05.158",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionSupport": true
+        },
+        "colWidth": 9.0,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9.0,
+        "title": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "ts": "string",
+                      "src": "string",
+                      "dst": "string",
+                      "port": "string",
+                      "bytes": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1632404957466_1049171713",
+      "id": "paragraph_1632316753235_1327799412",
+      "dateCreated": "2021-09-23 13:49:17.467",
+      "dateStarted": "2021-10-19 19:20:06.914",
+      "dateFinished": "2021-10-19 19:23:01.581",
+      "status": "FINISHED"
+    },
+    {
+      "title": "Data enrichment",
+      "text": "%python\ndef is_internal(s):\n    \u0027\u0027\u0027Internal hosts have IPs beginning with 12-14\u0027\u0027\u0027\n    return s.str.startswith((\u002712.\u0027, \u002713.\u0027, \u002714.\u0027)) \n\n# We create extra features to make it more convenient to do certain filters such as _\"inbound traffic\"_ and _\"outbound traffic\"_\ndf[\u0027src_int\u0027] \u003d is_internal(df[\u0027src\u0027])\ndf[\u0027dst_int\u0027] \u003d is_internal(df[\u0027dst\u0027])\n\n# Putting the correct data type on time and port columns\ndf[\u0027ts\u0027]      \u003d pd.to_datetime(df.ts, unit\u003d\u0027ms\u0027)\ndf[\u0027hour\u0027]    \u003d df.ts.dt.hour.astype(\u0027uint8\u0027)\ndf[\u0027minute\u0027]  \u003d df.ts.dt.minute.astype(\u0027uint8\u0027)\ndf[\u0027port\u0027]    \u003d df[\u0027port\u0027].astype(\u0027uint8\u0027)\n\nall_ips \u003d set(df[\u0027src\u0027].unique()) | set(df[\u0027dst\u0027].unique())\nprint(\u0027Unique src:\u0027, df[\u0027src\u0027].nunique())\nprint(\u0027Unique dst:\u0027, df[\u0027dst\u0027].nunique())\nprint(\u0027Total Unique IPs:\u0027, len(all_ips))\n\n# Converting the \"src\" and \"dst\" as categorical to save on memory.\nip_type \u003d pd.CategoricalDtype(categories\u003dall_ips)\ndf[\u0027src\u0027] \u003d df[\u0027src\u0027].astype(ip_type)\ndf[\u0027dst\u0027] \u003d df[\u0027dst\u0027].astype(ip_type)\nz.show(df)",
+      "user": "flo",
+      "dateUpdated": "2021-09-23 14:01:30.574",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9.0,
+        "title": true,
+        "results": {
+          "1": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "ts": "string",
+                      "src": "string",
+                      "dst": "string",
+                      "port": "string",
+                      "bytes": "string",
+                      "src_int": "string",
+                      "dst_int": "string",
+                      "hour": "string",
+                      "minute": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1632404957468_1172020230",
+      "id": "paragraph_1632316769410_1945315240",
+      "dateCreated": "2021-09-23 13:49:17.468",
+      "dateStarted": "2021-10-19 19:23:01.684",
+      "dateFinished": "2021-10-19 19:23:17.167",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%md\nLet\u0027s look for telltale signs of scanning which are one of:\n* large number of distinct destination ports\n* large number of distinct destination ips",
+      "user": "flo",
+      "dateUpdated": "2021-10-06 12:33:16.153",
+      "progress": 0,
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 6.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1632405033461_246688842",
+      "id": "paragraph_1632405033461_246688842",
+      "dateCreated": "2021-09-23 13:50:33.462",
+      "dateStarted": "2021-10-19 19:23:17.199",
+      "dateFinished": "2021-10-19 19:23:17.212",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%python\ndst_counts \u003d df[df[\u0027src_int\u0027] \u0026 df[\u0027dst_int\u0027]]\\\n    .drop_duplicates([\u0027src\u0027, \u0027dst\u0027])\\\n    .groupby(\u0027src\u0027).size()\\\n    .sort_values(ascending\u003dFalse)\ndst_counts.head()",
+      "user": "flo",
+      "dateUpdated": "2021-10-06 12:33:19.042",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "completionKey": "TAB"
+        },
+        "colWidth": 6.0,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9.0,
+        "editorHide": false,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1632404957470_288440012",
+      "id": "paragraph_1632316938867_1662681228",
+      "dateCreated": "2021-09-23 13:49:17.470",
+      "dateStarted": "2021-10-19 19:23:17.299",
+      "dateFinished": "2021-10-19 19:23:17.582",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%md\nHere it is clear that 13.42.70.40 is scanning and trying to move laterally. And for completeness, we can see a spike in network activity due to scanning on off hours.",
+      "user": "flo",
+      "dateUpdated": "2021-09-23 14:01:46.805",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 4.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1632405054139_1075642715",
+      "id": "paragraph_1632405054139_1075642715",
+      "dateCreated": "2021-09-23 13:50:54.139",
+      "dateStarted": "2021-10-19 19:23:17.599",
+      "dateFinished": "2021-10-19 19:23:17.606",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%python\ndf[df.src \u003d\u003d \u002713.42.70.40\u0027]\\\n    .set_index(\u0027ts\u0027)\\\n    .resample(\u00271h\u0027).size()\\\n    .plot(title\u003d\u0027Network activity count of 13.42.70.40\u0027)",
+      "user": "flo",
+      "dateUpdated": "2021-09-23 14:01:46.908",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "completionKey": "TAB"
+        },
+        "colWidth": 8.0,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1632404957470_1480558673",
+      "id": "paragraph_1632316948419_337978688",
+      "dateCreated": "2021-09-23 13:49:17.470",
+      "dateStarted": "2021-10-19 19:23:17.699",
+      "dateFinished": "2021-10-19 19:23:18.042",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%md\nOne host is trying to find a way onto every other host more quietly. What is its IP?",
+      "user": "flo",
+      "dateUpdated": "2021-09-23 14:01:47.112",
+      "progress": 0,
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1632404957470_632369830",
+      "id": "paragraph_1632321347604_1234385563",
+      "dateCreated": "2021-09-23 13:49:17.470",
+      "dateStarted": "2021-10-19 19:23:18.100",
+      "dateFinished": "2021-10-19 19:23:18.110",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%md\nLooking only at the number of unique ports or dsts, we cannot see any outliers.",
+      "user": "flo",
+      "dateUpdated": "2021-09-23 14:01:47.229",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 4.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1632405405387_1305301851",
+      "id": "paragraph_1632405405387_1305301851",
+      "dateCreated": "2021-09-23 13:56:45.387",
+      "dateStarted": "2021-10-19 19:23:18.200",
+      "dateFinished": "2021-10-19 19:23:18.206",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%python\nblacklist_ips \u003d [\u002713.42.70.40\u0027]\n\nint_df \u003d df[df[\u0027src_int\u0027] \u0026 df[\u0027dst_int\u0027]]\\\n    .pipe(lambda x: x[~x.src.isin(blacklist_ips)])\\\n    .drop_duplicates((\u0027src\u0027, \u0027dst\u0027, \u0027port\u0027))\n    \nprint(\u0027Unique ports\u0027)\nint_df\\\n  .drop_duplicates([\u0027src\u0027, \u0027port\u0027])\\\n  .groupby(\u0027src\u0027).size()\\\n  .sort_values(ascending\u003dFalse).head()",
+      "user": "flo",
+      "dateUpdated": "2021-09-23 14:01:47.333",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 8.0,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1632404957470_1248610866",
+      "id": "paragraph_1632321376837_695382441",
+      "dateCreated": "2021-09-23 13:49:17.470",
+      "dateStarted": "2021-10-19 19:23:18.300",
+      "dateFinished": "2021-10-19 19:23:18.899",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%md\nTo move laterally, you may first have to identify hosts that are online, and which ports are open. And typically, hosts, such as desktops, shouldn\u0027t expect connections to a lot of its ports, especially those ports that are not used.\n\nAnd for ports that are scanned, a lot of them may not be open, so we shouldn\u0027t expect legitimate traffic to try to connect to unused ports unless there is some misconfiguration. So for unused ports, we would only expect traffic from the scanner and no one else.\n\nFor each dst, port pair, we collect the hosts that are connected to it. If a lot of hosts are observed to connect to it, then we are more confident that it is a legitimate dst, port pair.",
+      "user": "flo",
+      "dateUpdated": "2021-09-24 14:40:22.609",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": true,
+        "results": {},
+        "enabled": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1632405372541_1228630214",
+      "id": "paragraph_1632405372541_1228630214",
+      "dateCreated": "2021-09-23 13:56:12.541",
+      "dateStarted": "2021-10-19 19:23:19.001",
+      "dateFinished": "2021-10-19 19:23:19.009",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%python\n\ndst_port_df \u003d int_df\\\n    .groupby([\u0027dst\u0027, \u0027port\u0027])\\\n    .src.apply(list).dropna()\n\ndst_port_df.sample(10)",
+      "user": "flo",
+      "dateUpdated": "2021-09-23 14:01:48.045",
+      "progress": 0,
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 6.0,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9.0,
+        "editorHide": false,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "dst": "string",
+                      "port": "string",
+                      "src": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1632404957471_691472159",
+      "id": "paragraph_1632321387050_708888308",
+      "dateCreated": "2021-09-23 13:49:17.471",
+      "dateStarted": "2021-10-19 19:23:19.101",
+      "dateFinished": "2021-10-19 19:23:20.514",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%python\n# filtering  out those that have only 1 unique src since these are more likely to be the result of some scanning. We then see where these activities come from.\n\n\ndst_port_df.pipe(lambda x: x[x.map(len) \u003d\u003d 1])\\\n    .to_frame().reset_index()\\\n    .explode(\u0027src\u0027)\\\n    .src.value_counts()",
+      "user": "flo",
+      "dateUpdated": "2021-09-23 14:01:49.651",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 6.0,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9.0,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1632404957471_1669923891",
+      "id": "paragraph_1632321392435_1975787756",
+      "dateCreated": "2021-09-23 13:49:17.471",
+      "dateStarted": "2021-10-19 19:23:20.602",
+      "dateFinished": "2021-10-19 19:23:20.617",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%md\n__ANSWER:__ 12.49.123.62",
+      "user": "flo",
+      "dateUpdated": "2021-09-23 14:01:49.755",
+      "progress": 0,
+      "config": {
+        "tableHide": true,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9.0,
+        "editorHide": false,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1632404957471_579500450",
+      "id": "paragraph_1632316978757_930319035",
+      "dateCreated": "2021-09-23 13:49:17.471",
+      "dateStarted": "2021-10-19 19:23:20.703",
+      "dateFinished": "2021-10-19 19:23:20.712",
+      "status": "FINISHED"
+    }
+  ],
+  "name": "Detect internal lateral movement [python, medium]",
+  "id": "2GG62C7PF",
+  "defaultInterpreterGroup": "spark",
+  "version": "0.10.0-SNAPSHOT",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {
+    "isZeppelinNotebookCronEnable": true,
+    "looknfeel": "default",
+    "personalizedMode": "false",
+    "cronExecutingUser": "",
+    "cronExecutingRoles": ""
+  },
+  "info": {
+    "inIsolatedMode": false,
+    "isRunning": false
+  }
+}
