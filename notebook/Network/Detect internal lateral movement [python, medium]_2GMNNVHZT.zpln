@@ -629,7 +629,7 @@
   ],
   "name": "Detect internal lateral movement [python, medium]",
   "id": "2GG62C7PF",
-  "defaultInterpreterGroup": "spark",
+  "defaultInterpreterGroup": "python",
   "version": "0.10.0-SNAPSHOT",
   "noteParams": {},
   "noteForms": {},
