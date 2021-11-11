@@ -1,0 +1,443 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n# Workspace Analysis [SQL, python, easy, scatterplot, alerts]\n\n### Data\nGetting data from BigQuery. (Google Workspace has native export to BigQuery.)\n  - time_usec, email, event_type\n\n### Goal\n*Exploration of event_type and volume of actions per employees*\n",
+      "user": "wigglytrout",
+      "dateUpdated": "2021-11-11T17:27:21+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9,
+        "editorHide": true,
+        "results": {},
+        "enabled": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1636589684970_1159080755",
+      "id": "paragraph_1633524297891_10802178",
+      "dateCreated": "2021-11-11T00:14:44+0000",
+      "dateStarted": "2021-11-11T17:27:21+0000",
+      "dateFinished": "2021-11-11T17:27:22+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:1850",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "<div class=\"markdown-body\">\n<h1>Workspace Analysis [SQL, python, easy, scatterplot, alerts]</h1>\n<h3>Data</h3>\n<p>Getting data from BigQuery. (Google Workspace has native export to BigQuery.)</p>\n<ul>\n<li>time_usec, email, event_type</li>\n</ul>\n<h3>Goal</h3>\n<p><em>Exploration of event_type and volume of actions per employees</em></p>\n\n</div>"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%python.conda activate securityhub",
+      "user": "anonymous",
+      "dateUpdated": "2021-11-11T03:34:54+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "sh",
+          "editOnDblClick": false,
+          "completionSupport": false
+        },
+        "colWidth": 6,
+        "editorMode": "ace/mode/sh",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1636589814557_1590457558",
+      "id": "paragraph_1636589814557_1590457558",
+      "dateCreated": "2021-11-11T00:16:54+0000",
+      "dateStarted": "2021-11-11T03:34:54+0000",
+      "dateFinished": "2021-11-11T03:34:55+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:1851"
+    },
+    {
+      "text": "%sh\nsource activate securityhub\npip3 install --upgrade seaborn",
+      "user": "anonymous",
+      "dateUpdated": "2021-11-11T03:34:55+0000",
+      "progress": 0,
+      "config": {
+        "tableHide": true,
+        "editorSetting": {
+          "language": "sh",
+          "editOnDblClick": false,
+          "completionSupport": false
+        },
+        "colWidth": 6,
+        "editorMode": "ace/mode/sh",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1636589853737_494719693",
+      "id": "paragraph_1636589853737_494719693",
+      "dateCreated": "2021-11-11T00:17:33+0000",
+      "dateStarted": "2021-11-11T03:34:55+0000",
+      "dateFinished": "2021-11-11T03:34:56+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:1852"
+    },
+    {
+      "text": "%md\nBringing data and starting analysis",
+      "user": "wigglytrout",
+      "dateUpdated": "2021-11-11T17:27:25+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionSupport": false
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true,
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1636599367548_58690800",
+      "id": "paragraph_1636599367548_58690800",
+      "dateCreated": "2021-11-11T02:56:07+0000",
+      "dateStarted": "2021-11-11T17:27:25+0000",
+      "dateFinished": "2021-11-11T17:27:25+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:1853",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "<div class=\"markdown-body\">\n<p>Bringing data and starting analysis</p>\n\n</div>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Query data from BigQuery (with SQL)",
+      "text": "%python\nfrom google.cloud import bigquery\nimport pandas as pd\nfrom matplotlib import pyplot as plt\n\nclient = bigquery.Client()\n\nquery = \"\"\"\nSELECT\n    time_usec,\n    email,\n    event_type\nFROM\n    `Workspace_Logs.activity`\nWHERE\n  time_usec > UNIX_MICROS(TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 29 DAY))\n\"\"\"\n\nquery_job = client.query(\n    query,\n    location=\"US\",\n)\n\ndf = query_job.to_dataframe()\ndf['date'] = pd.to_datetime(df['time_usec'], unit='us').dt.floor('h')\ndf = df.drop(\"time_usec\", axis=1)\ndf = df.sort_values('date')",
+      "user": "anonymous",
+      "dateUpdated": "2021-11-11T13:48:59+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/python",
+        "colWidth": 3,
+        "editorHide": false,
+        "fontSize": 9,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1636589684970_1687529344",
+      "id": "20210916-151054_587239592",
+      "dateCreated": "2021-11-11T00:14:44+0000",
+      "dateStarted": "2021-11-11T13:48:59+0000",
+      "dateFinished": "2021-11-11T13:49:06+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:1854"
+    },
+    {
+      "title": "Volume of employees events per day",
+      "text": "%python\nz.show(df[-1000:])",
+      "user": "anonymous",
+      "dateUpdated": "2021-11-11T17:12:00+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/python",
+        "colWidth": 9,
+        "editorHide": false,
+        "fontSize": 9,
+        "title": true,
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1636589684970_268886880",
+      "id": "20210916-151054_464727148",
+      "dateCreated": "2021-11-11T00:14:44+0000",
+      "dateStarted": "2021-11-11T13:49:02+0000",
+      "dateFinished": "2021-11-11T13:49:06+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:1855"
+    },
+    {
+      "title": "Resampling activities by day",
+      "text": "%python\ndata = df.value_counts('date').reset_index().sort_values('date').rename(columns={0: \"count\"})\nthreashold = round(data.shape[0]*0.9)\n\ndata.date = pd.to_datetime(data.date,format='%d-%m-%Y %H:%M') \ndata.index = data.date\ndata['count'].plot()\n\nsmooth = data.resample('D').mean() \nsmooth['count'].plot(lw=7)\nplt.show()",
+      "user": "anonymous",
+      "dateUpdated": "2021-11-11T17:20:55+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionSupport": true
+        },
+        "colWidth": 6,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "editorHide": true,
+        "enabled": true,
+        "tableHide": false,
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1636600685566_370760039",
+      "id": "paragraph_1636600685566_370760039",
+      "dateCreated": "2021-11-11T03:18:05+0000",
+      "dateStarted": "2021-11-11T13:49:06+0000",
+      "dateFinished": "2021-11-11T13:49:06+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:1856"
+    },
+    {
+      "title": "Activity by days of week",
+      "text": "%python\ndata['dow'] = data['date'].dt.day_name()\ndt = data.drop('date', axis=1).reset_index().groupby('dow').sum().reset_index()\nz.show(dt)",
+      "user": "anonymous",
+      "dateUpdated": "2021-11-11T17:20:21+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionSupport": true
+        },
+        "colWidth": 6,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "editorHide": true,
+        "enabled": true,
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1636637387529_1112816914",
+      "id": "paragraph_1636637387529_1112816914",
+      "dateCreated": "2021-11-11T13:29:47+0000",
+      "dateStarted": "2021-11-11T14:07:28+0000",
+      "dateFinished": "2021-11-11T14:07:28+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:1857"
+    },
+    {
+      "title": "Scatter volume of action per employee groups",
+      "text": "%python\ndf_scatter = df.value_counts(subset=['email','event_type']).reset_index().rename(columns={0: 'log_counts'})\n\nplt.figure(figsize=(15, 5))\nplt.scatter(df_scatter.email, df_scatter.event_type, s=df_scatter.log_counts, c=df_scatter.log_counts)\nplt.xticks(rotation=15)\nz.show(plt)\nplt.close()",
+      "user": "anonymous",
+      "dateUpdated": "2021-11-11T13:30:12+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/python",
+        "colWidth": 8,
+        "editorHide": true,
+        "fontSize": 9,
+        "title": true,
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1636589684970_236341634",
+      "id": "20210916-151054_546774518",
+      "dateCreated": "2021-11-11T00:14:44+0000",
+      "dateStarted": "2021-11-11T03:34:59+0000",
+      "dateFinished": "2021-11-11T03:35:00+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:1858"
+    },
+    {
+      "text": "%python\ndf['domain'] = df['email'].str.split('@', expand=True)[1]\ndf.value_counts(['domain', 'event_type'])",
+      "user": "anonymous",
+      "dateUpdated": "2021-11-11T13:30:17+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/python",
+        "colWidth": 4,
+        "editorHide": false,
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1636589684970_590130204",
+      "id": "20210916-151054_634479238",
+      "dateCreated": "2021-11-11T00:14:44+0000",
+      "dateStarted": "2021-11-11T03:35:00+0000",
+      "dateFinished": "2021-11-11T03:35:00+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:1859"
+    },
+    {
+      "text": "%python\nimport json\n\n# rules definitions\ndef external_access_to_internal_resources(log):\n    if log['email']:\n        if ('{companyname}' not in log['email']) and (log['event_type'] != \"event_change\"):\n            print(json.loads(log.to_json()))\n    elif log['event_type'] != 'call':\n        print(json.loads(log.to_json()))\n\n# main run\nfor index, row in df.iterrows():\n    external_access_to_internal_resources(row)",
+      "user": "wigglytrout",
+      "dateUpdated": "2021-11-11T17:28:04+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1636598925877_761524039",
+      "id": "paragraph_1636598925877_761524039",
+      "dateCreated": "2021-11-11T02:48:45+0000",
+      "dateStarted": "2021-11-11T17:23:45+0000",
+      "dateFinished": "2021-11-11T17:23:50+0000",
+      "status": "ERROR",
+      "$$hashKey": "object:1860"
+    },
+    {
+      "text": "%python\ndf['day'] = df['date'].dt.dayofweek\ndf['hour'] = df['date'].dt.hour\n\nfinal = df.value_counts(['day','hour'], normalize=True).to_frame('counts').reset_index()\nfinal = final.pivot(\"hour\", \"day\", \"counts\")\n\nimport seaborn as sns\nsns.set(rc={'figure.figsize':(15,10)})\nax = sns.heatmap(final, linewidths=.5, cmap=\"rocket_r\")\nax.set_xticklabels([\"Monday\", \"Tuesday.\", \"Wednesday\", \"Thursday\",\"Friday\", \"Saturday\", \"Sunday\"])\nax.set(xlabel=None)\nax.set_title(\"Employee engagement by hour and day\")",
+      "user": "anonymous",
+      "dateUpdated": "2021-11-11T17:28:33+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "editorHide": false,
+        "results": {},
+        "enabled": true,
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1636598991407_782015716",
+      "id": "paragraph_1636598991407_782015716",
+      "dateCreated": "2021-11-11T02:49:51+0000",
+      "dateStarted": "2021-11-11T03:35:01+0000",
+      "dateFinished": "2021-11-11T03:35:02+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:1861",
+      "title": "Activity view by hours and days across the week"
+    }
+  ],
+  "name": "Investigate Google Workspace [SQL, python, easy, scatterplot, alerts]",
+  "id": "2GNMZ3J8S",
+  "defaultInterpreterGroup": "bigquery",
+  "version": "0.11.0-SNAPSHOT",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {
+    "isZeppelinNotebookCronEnable": true,
+    "looknfeel": "default",
+    "personalizedMode": "false"
+  },
+  "info": {},
+  "path": "/Utilities/Investigate Google Workspace [SQL, python, easy, scatterplot, alerts]"
+}
